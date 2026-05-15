@@ -1,6 +1,5 @@
 name: Deploy to GitHub Pages
 
-# Deploy apenas quando há push na branch `main` (não dispara em `dev` nem outras).
 on:
   push:
     branches:
