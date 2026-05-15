@@ -1,0 +1,12 @@
+---
+import BlogPostLayout from '../layouts/BlogPostLayout.astro';
+import { getBlogStaticPaths, renderBlogPostBySlug } from '../utils/site';
+
+export const getStaticPaths = getBlogStaticPaths;
+
+const { post, Content } = await renderBlogPostBySlug(Astro.params.slug);
+---
+
+<BlogPostLayout post={post}>
+	<Content />
+</BlogPostLayout>

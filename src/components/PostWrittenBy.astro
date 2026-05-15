@@ -1,0 +1,26 @@
+---
+import PostAuthorAvatar from './PostAuthorAvatar.astro';
+import { sitePath } from '../utils/sitePath';
+
+interface Props {
+	authorName: string;
+	authorBio: string;
+	avatarUrl: string;
+}
+
+const { authorName, authorBio, avatarUrl } = Astro.props;
+---
+
+<footer class="post-article__written">
+	<p class="post-article__written-kicker">Escrito por</p>
+	<div class="post-article__author-card">
+		<PostAuthorAvatar src={avatarUrl} />
+		<div class="post-article__written-main">
+			<div class="post-article__written-row">
+				<strong class="post-article__written-name">{authorName}</strong>
+				<a class="btn-hud post-article__follow" href={sitePath('sobre/')}>Seguir</a>
+			</div>
+			<p class="post-article__written-bio">{authorBio}</p>
+		</div>
+	</div>
+</footer>

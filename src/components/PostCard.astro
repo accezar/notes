@@ -1,0 +1,87 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import TagBadge from './TagBadge.astro';
+import { SITE_AUTHOR } from '../data/variables';
+import { sitePath } from '../utils/sitePath';
+import { formatDatePt } from '../utils/formatDate';
+import { readingMinutesFromBody } from '../utils/readingTime';
+import { authorAbbrevLine, visibleTopicsForCard } from '../utils/postCardDisplay';
+
+interface Props {
+	post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { title, description, date, category, topics, thumbnail: thumbnailRaw } = post.data;
+const authorName = SITE_AUTHOR.name;
+const thumbnail = thumbnailRaw?.trim() || '';
+const href = sitePath(`${post.id}/`);
+const rawBody = typeof post.body === 'string' ? post.body : '';
+const readMin = readingMinutesFromBody(rawBody || undefined);
+const visibleTopics = visibleTopicsForCard(topics);
+const authorLine = authorAbbrevLine(authorName);
+
+const homeSearchText = [
+	title,
+	description,
+	category,
+	...(topics ?? []),
+	post.id,
+	authorName,
+	authorLine,
+	formatDatePt(date),
+]
+	.join(' ')
+	.replace(/\s+/g, ' ')
+	.trim();
+---
+
+<a
+	class="home-post-card"
+	href={href}
+	id={`post-${post.id}`}
+	data-home-search={homeSearchText}
+>
+	<span class="home-post-card__corner home-post-card__corner--tl" aria-hidden="true" />
+	<span class="home-post-card__corner home-post-card__corner--br" aria-hidden="true" />
+
+	<div class="home-post-card__media" aria-hidden={thumbnail ? undefined : 'true'}>
+		{thumbnail ? (
+			<img
+				class="home-post-card__image"
+				src={thumbnail}
+				alt=""
+				loading="lazy"
+				decoding="async"
+			/>
+		) : (
+			<span class="home-post-card__media-fallback">NO IMAGE</span>
+		)}
+	</div>
+
+	<div class="home-post-card__body">
+		<div class="home-post-card__meta">
+			<div class="home-post-card__tags">
+				{visibleTopics.length > 0 ? (
+					visibleTopics.map((topic) => <TagBadge tag={topic} />)
+				) : (
+					<TagBadge tag="NOTA" />
+				)}
+			</div>
+			<span class="home-post-card__read">{readMin} Min</span>
+		</div>
+
+		<h2 class="home-post-card__title">{title}</h2>
+		<p class="home-post-card__deck">{description}</p>
+
+		<div class="home-post-card__rule" aria-hidden="true" />
+
+		<div class="home-post-card__foot">
+			<span class="home-post-card__author">{authorLine}</span>
+			<span class="home-post-card__foot-sep" aria-hidden="true">|</span>
+			<time class="home-post-card__date" datetime={date.toISOString()}>
+				{formatDatePt(date)}
+			</time>
+		</div>
+	</div>
+</a>

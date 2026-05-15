@@ -1,0 +1,14 @@
+---
+interface Props {
+	tag: string;
+}
+
+const { tag } = Astro.props;
+const i = [...tag].reduce((acc, ch) => acc + ch.charCodeAt(0), 0) % 4;
+const tones = ['purple', 'green', 'orange', 'neutral'] as const;
+const tone = tones[i];
+---
+
+<span class={`tag-badge tag-badge--${tone}`}>
+	{tag}
+</span>

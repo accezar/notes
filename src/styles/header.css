@@ -1,0 +1,39 @@
+@layer components {
+	.site-header {
+		@apply sticky top-0 z-50 border-b border-edge bg-canvas;
+		background: var(--bg);
+		border-bottom: 1px solid var(--border);
+		box-shadow: none;
+		backdrop-filter: none;
+		-webkit-backdrop-filter: none;
+	}
+
+	.site-header__inner {
+		@apply flex min-h-13 w-full items-center justify-between gap-3 px-[clamp(1rem,4vw,1.75rem)];
+	}
+
+	.site-header__nav {
+		@apply flex flex-wrap items-center justify-start gap-x-6 gap-y-1;
+	}
+
+	.terminal-logo {
+		@apply inline-flex shrink-0 items-center gap-1 text-ink no-underline transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-soft focus-visible:ring-offset-2 focus-visible:ring-offset-surface;
+	}
+
+	.terminal-logo__chevron {
+		display: block;
+		height: 1.22rem;
+		width: 0.76rem;
+		flex-shrink: 0;
+		color: var(--text);
+	}
+
+	.terminal-logo__chars {
+		font-family: var(--font-mono);
+		font-size: 0.72rem;
+		font-weight: 600;
+		line-height: 1;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+	}
+}

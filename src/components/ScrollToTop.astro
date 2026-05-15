@@ -1,0 +1,28 @@
+---
+---
+
+<button
+	type="button"
+	class="btn-hud btn-hud--icon-sm scroll-top"
+	data-scroll-top
+	aria-label="Voltar ao topo"
+>
+	<span class="sr-only">Voltar ao topo</span>
+	<svg
+		class="scroll-top__icon"
+		viewBox="0 0 24 24"
+		fill="none"
+		stroke="currentColor"
+		stroke-width="2"
+		stroke-linecap="round"
+		stroke-linejoin="round"
+		aria-hidden="true"
+	>
+		<path d="M12 19V5M5 12l7-7 7 7"></path>
+	</svg>
+</button>
+
+<script>
+	import { attachScrollTop } from '../scripts/scroll-top-client';
+	attachScrollTop();
+</script>

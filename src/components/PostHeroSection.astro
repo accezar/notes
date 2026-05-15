@@ -1,0 +1,40 @@
+---
+import PostArticleLead from "./PostArticleLead.astro";
+import type { CollectionEntry } from "astro:content";
+
+import { readingMinutesFromBody } from "../utils/readingTime";
+
+interface Props {
+  data: CollectionEntry<"blog">["data"];
+  body: CollectionEntry<"blog">["body"];
+}
+
+const { data, body } = Astro.props;
+const { title, description, date, topics, thumbnail: thumbnailRaw } = data;
+const thumbnail = thumbnailRaw?.trim() || "";
+const readMin = readingMinutesFromBody(body);
+---
+
+<section class:list={["post-hero", thumbnail && "post-hero--with-thumbnail"]} aria-labelledby="post-hero-title">
+	{
+		thumbnail && (
+			<div class="post-hero__media" aria-hidden="true">
+				<img
+					class="post-hero__media-image"
+					src={thumbnail}
+					alt=""
+					loading="eager"
+					decoding="async"
+					fetchpriority="high"
+				/>
+			</div>
+		)
+	}
+	<div class="shell--lecture">
+		<div class="post-hero__inner">
+			<h1 id="post-hero-title" class="post-hero__title">{title}</h1>
+			<p class="post-hero__lead">{description}</p>
+			<PostArticleLead date={date} readMin={readMin} topics={topics} />
+		</div>
+	</div>
+</section>

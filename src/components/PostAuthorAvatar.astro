@@ -1,0 +1,11 @@
+---
+interface Props {
+	src: string;
+}
+
+const { src } = Astro.props;
+---
+
+<div class="post-article__written-avatar" aria-hidden="true">
+	<img src={src} alt="" width={76} height={76} loading="lazy" />
+</div>

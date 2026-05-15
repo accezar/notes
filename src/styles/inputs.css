@@ -1,0 +1,18 @@
+@layer components {
+	.home-search__input {
+		min-width: 0;
+		flex: 1 1 0%;
+		border: 0;
+		background: transparent;
+		padding: 0.625rem 0.75rem 0.625rem 0.25rem;
+		font-family: var(--font-mono);
+		font-size: 0.8125rem;
+		line-height: 1.55;
+		color: var(--text);
+		outline: none;
+	}
+
+	.home-search__input::placeholder {
+		color: color-mix(in oklab, var(--text-muted) 65%, transparent);
+	}
+}

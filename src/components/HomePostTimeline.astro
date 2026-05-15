@@ -1,0 +1,123 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import PostCard from './PostCard.astro';
+
+interface Props {
+	byYear: [year: number, posts: CollectionEntry<'blog'>[]][];
+}
+
+const { byYear } = Astro.props;
+const allPosts = byYear.flatMap(([, posts]) => posts);
+---
+
+<div class="home-timeline">
+	<div class="home-timeline__search">
+		<label for="home-post-search" class="sr-only">Buscar notas</label>
+		<div class="home-search">
+			<span class="home-search__icon-wrap" aria-hidden="true">
+				<svg
+					class="home-search__icon"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				>
+					<circle cx="11" cy="11" r="7"></circle>
+					<path d="m21 21-4.3-4.3"></path>
+				</svg>
+			</span>
+			<input
+				id="home-post-search"
+				type="search"
+				name="q"
+				autocomplete="off"
+				placeholder="Buscar…"
+				class="home-search__input"
+			/>
+		</div>
+	</div>
+	<section aria-label="Listagem de artigos">
+		<div class="post-list--home" data-home-post-list></div>
+		<template data-home-post-template>
+			{allPosts.map((post) => (
+				<PostCard post={post} />
+			))}
+		</template>
+		<div class="home-load-sentinel" data-home-load-sentinel aria-hidden="true"></div>
+		<p class="home-empty-search" data-home-empty hidden>
+			Nenhum resultado para esta busca.
+		</p>
+		<noscript>
+			<div class="post-list--home">
+				{allPosts.map((post) => (
+					<PostCard post={post} />
+				))}
+			</div>
+		</noscript>
+	</section>
+</div>
+
+<script is:inline>
+	(function () {
+		const input = document.getElementById('home-post-search');
+		const postList = document.querySelector('[data-home-post-list]');
+		const postTemplate = document.querySelector('[data-home-post-template]');
+		const empty = document.querySelector('[data-home-empty]');
+		const sentinel = document.querySelector('[data-home-load-sentinel]');
+		if (!input || !postList || !postTemplate) return;
+
+		const cards = Array.from(postTemplate.content.querySelectorAll('a[data-home-search]'));
+		const batchSize = 6;
+		let filteredCards = cards;
+		let renderedCount = 0;
+
+		function syncUiState() {
+			if (empty) empty.hidden = filteredCards.length !== 0;
+			if (sentinel) sentinel.hidden = filteredCards.length === 0 || renderedCount >= filteredCards.length;
+		}
+
+		function renderBatch() {
+			if (renderedCount >= filteredCards.length) {
+				syncUiState();
+				return;
+			}
+			const next = filteredCards.slice(renderedCount, renderedCount + batchSize);
+			const fragment = document.createDocumentFragment();
+			next.forEach((card) => fragment.appendChild(card.cloneNode(true)));
+			postList.appendChild(fragment);
+			renderedCount += next.length;
+			syncUiState();
+		}
+
+		function applyFilter() {
+			const q = (input.value || '').trim().toLowerCase();
+			filteredCards = q
+				? cards.filter((card) =>
+						(card.getAttribute('data-home-search') || '').toLowerCase().includes(q)
+					)
+				: cards;
+			renderedCount = 0;
+			postList.innerHTML = '';
+			renderBatch();
+		}
+
+		input.addEventListener('input', applyFilter);
+		input.addEventListener('search', applyFilter);
+
+		if ('IntersectionObserver' in window && sentinel) {
+			const observer = new IntersectionObserver(
+				(entries) => {
+					if (entries.some((entry) => entry.isIntersecting)) {
+						renderBatch();
+					}
+				},
+				{ rootMargin: '240px 0px' }
+			);
+			observer.observe(sentinel);
+		}
+
+		applyFilter();
+	})();
+</script>

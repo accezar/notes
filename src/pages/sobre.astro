@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SOBRE_PAGE } from '../data/variables';
+---
+
+<BaseLayout title={SOBRE_PAGE.title} description={SOBRE_PAGE.description}>
+	<div class="shell">
+		<header class="page-header">
+			<h1>Sobre</h1>
+			<p class="lead">{SOBRE_PAGE.lead}</p>
+		</header>
+
+		<p>
+			Este site é um blog estático: sem CMS, sem banco e sem backend — só Markdown, Astro e um
+			pouco de CSS. Serve como <strong>base pública de estudos e anotações técnicas</strong>, para
+			revisitar conceitos e compartilhar referências com colegas.
+		</p>
+
+		<h2 class="about-page__section-title">Áreas de interesse</h2>
+		<ul class="about-list">
+			{SOBRE_PAGE.interests.map((item) => <li>{item}</li>)}
+		</ul>
+	</div>
+</BaseLayout>

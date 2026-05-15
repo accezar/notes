@@ -1,0 +1,27 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import HomePostTimeline from "../components/HomePostTimeline.astro";
+import HomeProfileAside from "../components/HomeProfileAside.astro";
+import { HOME_PAGE_META } from "../data/variables";
+import { loadHomePageModel } from "../utils/site";
+
+const m = await loadHomePageModel();
+---
+
+<BaseLayout
+  title={HOME_PAGE_META.title}
+  description={HOME_PAGE_META.description}
+>
+  <div class="shell--lecture home-layout">
+      <HomePostTimeline byYear={m.byYear} />
+      <HomeProfileAside
+        authorName={m.authorName}
+        authorBio={m.authorBio}
+        authorAvatarUrl={m.authorAvatarUrl}
+        categories={m.categories}
+        topics={m.topics}
+        postIdByCategory={m.postIdByCategory}
+        postIdByTopic={m.postIdByTopic}
+      />
+  </div>
+</BaseLayout>

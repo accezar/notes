@@ -1,0 +1,106 @@
+---
+import { sitePath } from '../utils/sitePath';
+import { homePostAnchor } from '../utils/site';
+
+interface Props {
+	authorName: string;
+	authorBio: string;
+	authorAvatarUrl: string;
+	categories: string[];
+	topics: string[];
+	postIdByCategory: Record<string, string>;
+	postIdByTopic: Record<string, string>;
+}
+
+const {
+	authorName,
+	authorBio,
+	authorAvatarUrl,
+	categories,
+	topics,
+	postIdByCategory,
+	postIdByTopic,
+} = Astro.props;
+---
+
+<aside class="home-profile" aria-label="Autora">
+	<div class="home-profile-shell">
+		<div class="home-profile-card">
+			<div class="home-profile__identity">
+				<div class="home-profile__avatar" aria-hidden="true">
+					<img src={authorAvatarUrl} alt="" width="64" height="64" loading="lazy" />
+				</div>
+				<div class="home-profile__identity-main">
+					<p class="home-profile__name">{authorName}</p>
+					<p class="home-profile__location">
+						<svg viewBox="0 0 24 24" aria-hidden="true" class="home-profile__location-icon">
+							<path
+								d="M12 21s-6-5.2-6-10a6 6 0 1112 0c0 4.8-6 10-6 10zM12 13.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="1.8"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+							/>
+						</svg>
+						<span>Goiânia, BR</span>
+					</p>
+				</div>
+			</div>
+			<p class="home-profile__bio">{authorBio}</p>
+			<a class="btn-hud home-profile__about" href={sitePath('sobre/')}>
+				Sobre
+			</a>
+		</div>
+
+		<div class="home-profile-nav-stack">
+			{
+				categories.length > 0 ? (
+					<nav aria-labelledby="aside-profile-cat">
+						<p id="aside-profile-cat" class="home-nav__kicker">
+							# Categorias
+						</p>
+						<ul class="home-nav__list">
+							{categories.map((c) => {
+								const pid = postIdByCategory[c];
+								return (
+									<li>
+										{pid ? (
+											<a class="home-nav__link" href={homePostAnchor(pid)}>
+												{c}
+											</a>
+										) : (
+											<span class="home-nav__muted">{c}</span>
+										)}
+									</li>
+								);
+							})}
+						</ul>
+					</nav>
+				) : null
+			}
+
+			<div class="home-profile-divider" aria-hidden="true"></div>
+
+			<nav aria-labelledby="aside-profile-top">
+				<p id="aside-profile-top" class="home-nav__kicker"># Tópicos</p>
+				<ul class="home-nav__list">
+					{topics.map((t) => {
+						const pid = postIdByTopic[t];
+						return (
+							<li>
+								{pid ? (
+									<a class="home-nav__link" href={homePostAnchor(pid)}>
+										{t}
+									</a>
+								) : (
+									<span class="home-nav__muted">{t}</span>
+								)}
+							</li>
+						);
+					})}
+				</ul>
+			</nav>
+		</div>
+	</div>
+</aside>

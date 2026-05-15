@@ -1,0 +1,28 @@
+@layer components {
+	.site-footer {
+		@apply mt-auto border-t border-edge py-3 text-[0.8125rem] leading-relaxed text-ink-muted sm:py-4;
+		background: var(--bg);
+	}
+
+	.site-footer__inner {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.site-footer__credit {
+		@apply m-0 max-w-prose text-center text-pretty;
+		font-family: var(--font-mono);
+		font-size: 0.6875rem;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+	}
+
+	.site-footer__credit a {
+		font-family: var(--font-mono);
+		font-size: inherit;
+		letter-spacing: inherit;
+		text-transform: inherit;
+		@apply text-ink-muted underline decoration-edge underline-offset-3 transition hover:text-ink hover:decoration-ink/40;
+	}
+}

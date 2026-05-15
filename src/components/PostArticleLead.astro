@@ -1,0 +1,27 @@
+---
+import TagBadge from './TagBadge.astro';
+import { formatDatePt } from '../utils/formatDate';
+
+interface Props {
+	date: Date;
+	readMin: number;
+	topics: string[];
+}
+
+const { date, readMin, topics } = Astro.props;
+---
+
+<header class="post-hero__lead-row">
+	{
+		topics.length > 0 ? (
+			<div class="post-hero__tags" role="list" aria-label="Tópicos">
+				{topics.map((topic) => (
+					<TagBadge tag={topic} />
+				))}
+			</div>
+		) : null
+	}
+	<p class="post-hero__meta">
+		{readMin} min de leitura · {formatDatePt(date)}
+	</p>
+</header>

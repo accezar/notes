@@ -1,0 +1,142 @@
+---
+import { sitePath } from '../utils/sitePath';
+import { SITE_NOTES_NAME, TERMINAL_LOGO } from '../data/variables';
+---
+
+<a href={sitePath('')} class="terminal-logo" aria-label={`Início — ${SITE_NOTES_NAME}`}>
+	<svg
+		class="terminal-logo__chevron"
+		width="16"
+		height="22"
+		viewBox="0 0 16 22"
+		fill="none"
+		xmlns="http://www.w3.org/2000/svg"
+		aria-hidden="true"
+	>
+		<path
+			d="M4 5L12 11L4 17"
+			stroke="currentColor"
+			stroke-width="2.65"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+		/>
+	</svg>
+	<span class="terminal-logo__chars" aria-hidden="true"></span>
+</a>
+
+<style>
+	.terminal-logo__chars :global(.terminal-logo__blink) {
+		animation: terminal-logo-blink 1.05s step-end infinite;
+	}
+
+	@keyframes terminal-logo-blink {
+		0%,
+		45% {
+			opacity: 1;
+		}
+		50%,
+		100% {
+			opacity: 0;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.terminal-logo__chars :global(.terminal-logo__blink) {
+			animation: none;
+			opacity: 1;
+		}
+	}
+</style>
+
+<script
+	define:vars={{
+		logoText: TERMINAL_LOGO.text,
+		cycleMs: TERMINAL_LOGO.cycleMs,
+		typeMs: TERMINAL_LOGO.typeMs,
+		eraseMs: TERMINAL_LOGO.eraseMs,
+	}}
+>
+	function renderChars(el, len) {
+		if (len <= 0) {
+			el.textContent = '';
+			return;
+		}
+		if (len >= logoText.length) {
+			const base = logoText.slice(0, -1);
+			const last = logoText.charAt(logoText.length - 1);
+			el.innerHTML = `${base}<span class="terminal-logo__blink">${last}</span>`;
+			return;
+		}
+		el.textContent = logoText.slice(0, len);
+	}
+
+	function runLogoCycle(anchor, charsEl) {
+		let pos = 0;
+		let cycleTimer;
+
+		const clearCycleTimer = () => {
+			if (cycleTimer !== undefined) {
+				clearTimeout(cycleTimer);
+				cycleTimer = undefined;
+			}
+		};
+
+		const scheduleNextCycle = () => {
+			clearCycleTimer();
+			cycleTimer = setTimeout(() => {
+				eraseThenType();
+			}, cycleMs);
+		};
+
+		const eraseThenType = () => {
+			const stepErase = () => {
+				if (pos <= 0) {
+					typeForward();
+					return;
+				}
+				pos -= 1;
+				renderChars(charsEl, pos);
+				setTimeout(stepErase, eraseMs);
+			};
+
+			pos = logoText.length;
+			renderChars(charsEl, pos);
+			setTimeout(stepErase, eraseMs);
+		};
+
+		const typeForward = () => {
+			const stepType = () => {
+				pos += 1;
+				renderChars(charsEl, pos);
+				if (pos >= logoText.length) {
+					scheduleNextCycle();
+					return;
+				}
+				setTimeout(stepType, typeMs);
+			};
+			pos = 0;
+			charsEl.textContent = '';
+			setTimeout(stepType, typeMs);
+		};
+
+		typeForward();
+
+		anchor.addEventListener(
+			'astro:before-preparation',
+			() => {
+				clearCycleTimer();
+			},
+			{ once: true },
+		);
+	}
+
+	const anchor = document.querySelector('a.terminal-logo');
+	const charsEl = anchor?.querySelector('.terminal-logo__chars');
+	if (!anchor || !charsEl) return;
+
+	if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+		renderChars(charsEl, logoText.length);
+	} else {
+		runLogoCycle(anchor, charsEl);
+	}
+</script>

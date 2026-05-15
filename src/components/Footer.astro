@@ -1,0 +1,16 @@
+---
+import { currentYear } from '../utils/site';
+
+const year = currentYear();
+---
+
+<footer class="site-footer" aria-label="Rodapé">
+	<div class="site-footer__inner shell--lecture">
+		<p class="site-footer__credit">
+			© {year} — Powered by{' '}
+			<a href="https://astro.build/" rel="noopener noreferrer">
+				Astro
+			</a>
+		</p>
+	</div>
+</footer>
