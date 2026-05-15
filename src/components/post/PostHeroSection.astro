@@ -2,7 +2,7 @@
 import PostArticleLead from "./PostArticleLead.astro";
 import type { CollectionEntry } from "astro:content";
 
-import { readingMinutesFromBody } from "../utils/readingTime";
+import { readingMinutesFromBody } from "../../utils/reading-time";
 
 interface Props {
   data: CollectionEntry<"blog">["data"];

@@ -1,11 +1,11 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import TagBadge from './TagBadge.astro';
-import { SITE_AUTHOR } from '../data/variables';
-import { sitePath } from '../utils/sitePath';
-import { formatDatePt } from '../utils/formatDate';
-import { readingMinutesFromBody } from '../utils/readingTime';
-import { authorAbbrevLine, visibleTopicsForCard } from '../utils/postCardDisplay';
+import { SITE_AUTHOR } from '../../data/variables';
+import { sitePath } from '../../utils/site-path';
+import { formatDatePt } from '../../utils/format-date';
+import { readingMinutesFromBody } from '../../utils/reading-time';
+import { authorAbbrevLine, visibleTopicsForCard } from '../../utils/post-card-display';
 
 interface Props {
 	post: CollectionEntry<'blog'>;

@@ -7,9 +7,9 @@ import {
 	uniqueCategoryLabels,
 	firstPostIdByTopic,
 	firstPostIdByCategory,
-} from './blogPosts';
+} from './blog-posts';
 import { SITE_AUTHOR, SITE_NOTES_NAME } from '../data/variables';
-import { sitePath } from './sitePath';
+import { sitePath } from './site-path';
 
 export function canonicalUrl(site: URL | undefined, pathname: string): string | undefined {
 	if (!site) return undefined;
@@ -22,10 +22,6 @@ export function currentYear(): number {
 
 export function homePostAnchor(postId: string): string {
 	return `${sitePath('')}#post-${postId}`;
-}
-
-export function homeYearAnchor(year: number): string {
-	return `${sitePath('')}#ano-${year}`;
 }
 
 export function githubAvatarUrl(username: string, size = 160): string {

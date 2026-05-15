@@ -1,6 +1,6 @@
 ---
 import PostAuthorAvatar from './PostAuthorAvatar.astro';
-import { sitePath } from '../utils/sitePath';
+import { sitePath } from '../../utils/site-path';
 
 interface Props {
 	authorName: string;
@@ -18,7 +18,7 @@ const { authorName, authorBio, avatarUrl } = Astro.props;
 		<div class="post-article__written-main">
 			<div class="post-article__written-row">
 				<strong class="post-article__written-name">{authorName}</strong>
-				<a class="btn-hud post-article__follow" href={sitePath('sobre/')}>Seguir</a>
+				<a class="btn-hud post-article__follow" href={sitePath('about/')}>Seguir</a>
 			</div>
 			<p class="post-article__written-bio">{authorBio}</p>
 		</div>

@@ -12,7 +12,7 @@ export const HOME_PAGE_META = {
 		'Notas sobre arquitetura, plataformas, segurança e engenharia de software.',
 } as const;
 
-export const SOBRE_PAGE = {
+export const ABOUT_PAGE = {
 	title: `Sobre · ${SITE_NOTES_NAME}`,
 	description: 'Interesses e propósito deste blog de estudos técnicos.',
 	lead:

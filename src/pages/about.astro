@@ -1,13 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { SOBRE_PAGE } from '../data/variables';
+import { ABOUT_PAGE } from '../data/variables';
 ---
 
-<BaseLayout title={SOBRE_PAGE.title} description={SOBRE_PAGE.description}>
+<BaseLayout title={ABOUT_PAGE.title} description={ABOUT_PAGE.description}>
 	<div class="shell">
 		<header class="page-header">
 			<h1>Sobre</h1>
-			<p class="lead">{SOBRE_PAGE.lead}</p>
+			<p class="lead">{ABOUT_PAGE.lead}</p>
 		</header>
 
 		<p>
@@ -18,7 +18,7 @@ import { SOBRE_PAGE } from '../data/variables';
 
 		<h2 class="about-page__section-title">Áreas de interesse</h2>
 		<ul class="about-list">
-			{SOBRE_PAGE.interests.map((item) => <li>{item}</li>)}
+			{ABOUT_PAGE.interests.map((item) => <li>{item}</li>)}
 		</ul>
 	</div>
 </BaseLayout>

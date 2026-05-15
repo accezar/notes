@@ -4,7 +4,7 @@ Blog pessoal para compartilhar notas técnicas.
 
 ## Rotas
 
-`https://accezar.github.io/blog/`
+`https://accezar.github.io/notes/`
 
 | Caminho | Página |
 |---------|--------|

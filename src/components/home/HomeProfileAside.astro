@@ -1,6 +1,6 @@
 ---
-import { sitePath } from '../utils/sitePath';
-import { homePostAnchor } from '../utils/site';
+import { sitePath } from '../../utils/site-path';
+import { homePostAnchor } from '../../utils/site';
 
 interface Props {
 	authorName: string;
@@ -48,7 +48,7 @@ const {
 				</div>
 			</div>
 			<p class="home-profile__bio">{authorBio}</p>
-			<a class="btn-hud home-profile__about" href={sitePath('sobre/')}>
+			<a class="btn-hud home-profile__about" href={sitePath('about/')}>
 				Sobre
 			</a>
 		</div>
