@@ -1,0 +1,34 @@
+---
+import type { MarkdownHeading } from 'astro';
+
+interface Props {
+	headings: MarkdownHeading[];
+	maxDepth: number;
+	minDepth: number;
+}
+
+const { headings, maxDepth: maxRaw, minDepth: minRaw } = Astro.props;
+let minDepth = minRaw;
+let maxDepth = maxRaw;
+if (minDepth > maxDepth) [minDepth, maxDepth] = [maxDepth, minDepth];
+const items = headings.filter((h) => h.depth >= minDepth && h.depth <= maxDepth);
+---
+
+{
+	items.length > 0 && (
+		<nav class="post-article__toc" aria-label="Índice do artigo">
+			<div class="post-article__toc-head">
+				<h2 class="post-article__toc-title">Índice</h2>
+			</div>
+			<ol class="post-article__toc-list">
+				{items.map((h) => (
+					<li class="post-article__toc-item" data-toc-depth={h.depth}>
+						<a href={`#${h.slug}`} class="post-article__toc-link">
+							<span class="post-article__toc-link-text">{h.text}</span>
+						</a>
+					</li>
+				))}
+			</ol>
+		</nav>
+	)
+}

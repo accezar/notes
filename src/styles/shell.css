@@ -1,3 +1,5 @@
+/* Shell width utilities. */
+
 @layer components {
 	.shell {
 		@apply mx-auto w-full max-w-[min(90rem,100%)] px-[clamp(1rem,4vw,1.75rem)];

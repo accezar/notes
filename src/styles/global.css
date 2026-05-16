@@ -11,23 +11,28 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme inline {
-	--color-canvas: var(--bg);
-	--color-surface: var(--surface);
-	--color-ink: var(--text);
-	--color-ink-muted: var(--text-muted);
-	--color-edge: var(--border);
 	--color-accent: var(--accent);
 	--color-accent-soft: var(--accent-soft);
+	--color-canvas: var(--bg);
+	--color-edge: var(--border);
+	--color-ink: var(--text);
+	--color-ink-muted: var(--text-muted);
+	--color-surface: var(--surface);
 }
 
 @layer components {
-	.site-body {
-		@apply m-0 flex min-h-screen flex-col bg-canvas font-sans text-ink leading-relaxed antialiased;
+	.about-list {
+		margin: 1rem 0 0;
+		padding-left: 1.25rem;
+		color: var(--text-muted);
 	}
 
-	.site-main {
-		@apply flex-1 pt-0;
-		padding-bottom: calc(clamp(1rem, 2.5vw, 2rem) + env(safe-area-inset-bottom, 0px));
+	.about-list li {
+		margin-bottom: 0.35rem;
+	}
+
+	.about-page__section-title {
+		@apply mb-5 mt-8 text-lg font-semibold tracking-tight text-ink;
 	}
 
 	.page-header {
@@ -47,18 +52,13 @@
 		max-width: 45ch;
 	}
 
-	.about-list {
-		margin: 1rem 0 0;
-		padding-left: 1.25rem;
-		color: var(--text-muted);
+	.site-body {
+		@apply m-0 flex min-h-screen flex-col bg-canvas font-sans text-ink leading-relaxed antialiased;
 	}
 
-	.about-list li {
-		margin-bottom: 0.35rem;
-	}
-
-	.about-page__section-title {
-		@apply mb-5 mt-8 text-lg font-semibold tracking-tight text-ink;
+	.site-main {
+		@apply flex-1 pt-0;
+		padding-bottom: calc(clamp(1rem, 2.5vw, 2rem) + env(safe-area-inset-bottom, 0px));
 	}
 }
 
@@ -69,20 +69,6 @@
 		box-sizing: border-box;
 	}
 
-	html {
-		font-family: var(--font-sans);
-		background-color: var(--bg);
-		color: var(--text);
-		line-height: 1.65;
-		-webkit-font-smoothing: antialiased;
-	}
-
-	body {
-		background-image: var(--canvas-radial-top), var(--canvas-grid-x), var(--canvas-grid-y);
-		background-color: var(--bg);
-		background-size: auto, var(--canvas-grid-size-body), var(--canvas-grid-size-body), auto;
-	}
-
 	a {
 		color: var(--accent-soft);
 		text-decoration-thickness: 1px;
@@ -91,6 +77,20 @@
 
 	a:hover {
 		color: var(--accent);
+	}
+
+	body {
+		background-image: var(--canvas-radial-top), var(--canvas-grid-x), var(--canvas-grid-y);
+		background-color: var(--bg);
+		background-size: auto, var(--canvas-grid-size-body), var(--canvas-grid-size-body), auto;
+	}
+
+	html {
+		font-family: var(--font-sans);
+		background-color: var(--bg);
+		color: var(--text);
+		line-height: 1.65;
+		-webkit-font-smoothing: antialiased;
 	}
 
 	html.dark body {

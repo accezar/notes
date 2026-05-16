@@ -1,16 +1,20 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import PostHeroSection from '../components/post/PostHeroSection.astro';
+import PostTableOfContents from '../components/post/PostTableOfContents.astro';
 import PostWrittenBy from '../components/post/PostWrittenBy.astro';
+import PostMermaid from '../components/react/PostMermaid';
+import type { MarkdownHeading } from 'astro';
 import type { CollectionEntry } from 'astro:content';
 import { SITE_AUTHOR } from '../data/variables';
 import { githubAvatarUrl, pageTitleWithBrand } from '../utils/site';
 
 interface Props {
 	post: CollectionEntry<'blog'>;
+	headings: MarkdownHeading[];
 }
 
-const { post } = Astro.props;
+const { post, headings } = Astro.props;
 const { title, description } = post.data;
 const pageTitle = pageTitleWithBrand(title);
 const authorAvatarUrl = githubAvatarUrl(SITE_AUTHOR.githubUsername);
@@ -21,7 +25,15 @@ const authorAvatarUrl = githubAvatarUrl(SITE_AUTHOR.githubUsername);
 	<div class="shell--lecture post-page">
 		<article class="post-article">
 			<div class="post-article__main">
+				{post.data.toc ? (
+					<PostTableOfContents
+						headings={headings}
+						maxDepth={post.data.tocMaxDepth}
+						minDepth={post.data.tocMinDepth}
+					/>
+				) : null}
 				<slot />
+				<PostMermaid client:visible />
 				<PostWrittenBy
 					authorName={SITE_AUTHOR.name}
 					authorBio={SITE_AUTHOR.bio}
