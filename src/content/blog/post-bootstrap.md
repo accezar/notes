@@ -2,12 +2,10 @@
 title: 'Título do post'
 description: 'Descrição curta do conteúdo do post.'
 date: 2026-05-14
-category: 'categoria-principal'
-topics:
-  - topico-1
-  - topico-2
-  - topico-3
+category: 'Engenharia'
+topics: []
 draft: false
+toc: true
 thumbnail: 'https://picsum.photos/id/180/640/420'
 ---
 

@@ -4,9 +4,9 @@ import { getBlogStaticPaths, renderBlogPostBySlug } from '../utils/site';
 
 export const getStaticPaths = getBlogStaticPaths;
 
-const { post, Content } = await renderBlogPostBySlug(Astro.params.slug);
+const { post, Content, headings } = await renderBlogPostBySlug(Astro.params.slug);
 ---
 
-<BlogPostLayout post={post}>
+<BlogPostLayout post={post} headings={headings}>
 	<Content />
 </BlogPostLayout>

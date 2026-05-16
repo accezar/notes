@@ -1,4 +1,5 @@
 import { SCROLL_TOP } from '../data/variables';
+import { onDomReady } from './dom-ready';
 
 export function attachScrollTop(): void {
 	const bind = (): void => {
@@ -20,9 +21,5 @@ export function attachScrollTop(): void {
 		});
 	};
 
-	if (document.readyState === 'loading') {
-		document.addEventListener('DOMContentLoaded', bind, { once: true });
-	} else {
-		bind();
-	}
+	onDomReady(bind);
 }

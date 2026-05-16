@@ -41,8 +41,8 @@ export async function renderBlogPostBySlug(slug: string | undefined) {
 	if (!slug) throw new Error('Missing slug');
 	const post = await getEntry('blog', slug);
 	if (!post) throw new Error(`Unknown post: ${slug}`);
-	const { Content } = await render(post);
-	return { post, Content };
+	const { Content, headings } = await render(post);
+	return { post, Content, headings };
 }
 
 export async function loadHomePageModel() {

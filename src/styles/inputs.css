@@ -1,3 +1,5 @@
+/* Form inputs used on the home timeline (search). */
+
 @layer components {
 	.home-search__input {
 		min-width: 0;

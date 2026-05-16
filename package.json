@@ -9,11 +9,23 @@
     "dev": "astro dev",
     "build": "NODE_ENV=production astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "test": "vitest",
+    "test:run": "vitest run"
   },
   "dependencies": {
+    "@astrojs/react": "^5.0.5",
     "@tailwindcss/vite": "^4.3.0",
     "astro": "^6.3.3",
+    "mermaid": "^11.15.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
     "tailwindcss": "^4.3.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "happy-dom": "^20.9.0",
+    "vitest": "^4.1.6"
   }
 }

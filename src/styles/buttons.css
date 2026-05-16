@@ -1,3 +1,5 @@
+/* Buttons: HUD, scroll-to-top, theme toggle. */
+
 @layer components {
 	.btn-hud {
 		--_bracket: var(--btn-hud-bracket);
@@ -33,40 +35,13 @@
 			filter 0.15s ease;
 	}
 
-	.btn-hud:hover {
-		filter: brightness(1.06);
-	}
-
 	.btn-hud:focus-visible {
 		outline: 2px solid var(--accent-soft);
 		outline-offset: 2px;
 	}
 
-	.theme-toggle {
-		@apply inline-flex h-9 w-9 shrink-0 items-center justify-center text-ink-muted transition-colors hover:text-ink;
-		background: transparent;
-		border: 0;
-		cursor: pointer;
-	}
-
-	.theme-toggle:focus-visible {
-		outline: 2px solid var(--accent-soft);
-		outline-offset: 2px;
-	}
-
-	.theme-toggle svg {
-		height: 1rem;
-		width: 1rem;
-	}
-
-	.theme-toggle__icon--sun,
-	.dark .theme-toggle__icon--moon {
-		display: none;
-	}
-
-	.theme-toggle__icon--moon,
-	.dark .theme-toggle__icon--sun {
-		display: block;
+	.btn-hud:hover {
+		filter: brightness(1.06);
 	}
 
 	.scroll-top.btn-hud {
@@ -98,5 +73,32 @@
 		display: block;
 		width: 1rem;
 		height: 1rem;
+	}
+
+	.theme-toggle {
+		@apply inline-flex h-9 w-9 shrink-0 items-center justify-center text-ink-muted transition-colors hover:text-ink;
+		background: transparent;
+		border: 0;
+		cursor: pointer;
+	}
+
+	.theme-toggle:focus-visible {
+		outline: 2px solid var(--accent-soft);
+		outline-offset: 2px;
+	}
+
+	.theme-toggle svg {
+		height: 1rem;
+		width: 1rem;
+	}
+
+	.theme-toggle__icon--sun,
+	.dark .theme-toggle__icon--moon {
+		display: none;
+	}
+
+	.theme-toggle__icon--moon,
+	.dark .theme-toggle__icon--sun {
+		display: block;
 	}
 }

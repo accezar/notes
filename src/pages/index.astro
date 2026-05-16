@@ -1,11 +1,15 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import HomePostTimeline from "../components/home/HomePostTimeline.astro";
+import HomePostTimeline from "../components/react/HomePostTimeline";
 import HomeProfileAside from "../components/home/HomeProfileAside.astro";
+import PostCard from "../components/post/PostCard.astro";
 import { HOME_PAGE_META } from "../data/variables";
 import { loadHomePageModel } from "../utils/site";
+import { toHomeTimelinePosts } from "../utils/home-timeline-posts";
 
 const m = await loadHomePageModel();
+const timelinePosts = toHomeTimelinePosts(m.byYear);
+const allPosts = m.byYear.flatMap(([, posts]) => posts);
 ---
 
 <BaseLayout
@@ -13,7 +17,18 @@ const m = await loadHomePageModel();
   description={HOME_PAGE_META.description}
 >
   <div class="shell--lecture home-layout">
-      <HomePostTimeline byYear={m.byYear} />
+      <HomePostTimeline posts={timelinePosts} client:load />
+      <noscript>
+        <div class="home-timeline">
+          <section aria-label="Listagem de artigos">
+            <div class="post-list--home">
+              {allPosts.map((post) => (
+                <PostCard post={post} />
+              ))}
+            </div>
+          </section>
+        </div>
+      </noscript>
       <HomeProfileAside
         authorName={m.authorName}
         authorBio={m.authorBio}
