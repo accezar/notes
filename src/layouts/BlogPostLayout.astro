@@ -34,6 +34,7 @@ const authorAvatarUrl = githubAvatarUrl(SITE_AUTHOR.githubUsername);
 				) : null}
 				<slot />
 				<PostMermaid client:visible />
+				<script src="../scripts/entries/code-blocks.ts"></script>
 				<PostWrittenBy
 					authorName={SITE_AUTHOR.name}
 					authorBio={SITE_AUTHOR.bio}
@@ -42,4 +43,31 @@ const authorAvatarUrl = githubAvatarUrl(SITE_AUTHOR.githubUsername);
 			</div>
 		</article>
 	</div>
+	<dialog
+		id="post-image-lightbox"
+		class="post-image-lightbox"
+		aria-label="Visualização ampliada da imagem"
+		closedby="any"
+	>
+		<button
+			type="button"
+			class="post-image-lightbox__close"
+			data-post-image-lightbox-close
+			aria-label="Fechar visualização"
+		>
+			<span class="sr-only">Fechar</span>
+			<svg
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2"
+				stroke-linecap="round"
+				aria-hidden="true"
+			>
+				<path d="M18 6 6 18M6 6l12 12" />
+			</svg>
+		</button>
+		<img class="post-image-lightbox__img" alt="" decoding="async" />
+	</dialog>
+	<script src="../scripts/entries/post-image-lightbox.ts"></script>
 </BaseLayout>

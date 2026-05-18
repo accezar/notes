@@ -1,0 +1,23 @@
+---
+import { getGaMeasurementId, isGoogleAnalyticsEnabled } from '../../utils/analytics';
+
+const measurementId = getGaMeasurementId();
+const enabled = isGoogleAnalyticsEnabled();
+---
+
+{
+	enabled && measurementId ? (
+		<>
+			<link rel="preconnect" href="https://www.googletagmanager.com" />
+			<script async src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`} />
+			<script is:inline define:vars={{ measurementId }}>
+				window.dataLayer = window.dataLayer || [];
+				function gtag() {
+					dataLayer.push(arguments);
+				}
+				gtag('js', new Date());
+				gtag('config', measurementId);
+			</script>
+		</>
+	) : null
+}

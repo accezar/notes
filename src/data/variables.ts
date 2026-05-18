@@ -2,29 +2,19 @@ export const SITE_NOTES_NAME = "Anna's Notes";
 
 export const SITE_AUTHOR = {
 	name: 'Anna',
-	bio: 'Notas sobre arquitetura, plataformas, segurança e engenharia de software.',
+	bio: 'Notas sobre engenharia de software, segurança e projetos pessoais.',
 	githubUsername: 'accezar',
+} as const;
+
+export const SITE_SOCIAL = {
+	github: `https://github.com/${SITE_AUTHOR.githubUsername}`,
+	linkedin: 'https://www.linkedin.com/in/accezar',
 } as const;
 
 export const HOME_PAGE_META = {
 	title: SITE_NOTES_NAME,
 	description:
 		'Notas sobre arquitetura, plataformas, segurança e engenharia de software.',
-} as const;
-
-export const ABOUT_PAGE = {
-	title: `Sobre · ${SITE_NOTES_NAME}`,
-	description: 'Interesses e propósito deste blog de estudos técnicos.',
-	lead:
-		'Olá — sou a Anna (nome genérico para este template). Trabalho com software e gosto de deixar rastros legíveis do que estou aprendendo.',
-	interests: [
-		'Software Architecture',
-		'Cloud Computing',
-		'Application Security',
-		'Frontend Engineering',
-		'Code Patterns',
-		'AI-assisted Development',
-	] as const,
 } as const;
 
 export const TERMINAL_LOGO = {
