@@ -18,6 +18,31 @@
 		@apply flex flex-wrap items-center justify-start gap-x-6 gap-y-1;
 	}
 
+	.site-header__profile-menu {
+		@apply inline-flex h-9 w-9 shrink-0 items-center justify-center transition-colors hover:text-ink;
+		color: var(--text);
+		background: transparent;
+		border: 0;
+		cursor: pointer;
+	}
+
+	.site-header__profile-menu:focus-visible {
+		outline: 2px solid var(--accent-soft);
+		outline-offset: 2px;
+	}
+
+	.site-header__profile-menu-icon {
+		display: block;
+		width: 1.125rem;
+		height: 1.125rem;
+	}
+
+	@media (min-width: 900px) {
+		.site-header__profile-menu {
+			display: none;
+		}
+	}
+
 	.terminal-logo {
 		@apply inline-flex shrink-0 items-center gap-1 text-ink no-underline transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-soft focus-visible:ring-offset-2 focus-visible:ring-offset-surface;
 	}

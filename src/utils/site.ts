@@ -24,6 +24,18 @@ export function homePostAnchor(postId: string): string {
 	return `${sitePath('')}#post-${postId}`;
 }
 
+function normalizePathname(pathname: string): string {
+	if (pathname.length > 1 && pathname.endsWith('/')) {
+		return pathname.slice(0, -1);
+	}
+	return pathname;
+}
+
+/** True on the blog index route (respects `base`, e.g. `/notes/` in production). */
+export function isHomePage(url: URL): boolean {
+	return normalizePathname(url.pathname) === normalizePathname(sitePath(''));
+}
+
 export function githubAvatarUrl(username: string, size = 160): string {
 	return `https://github.com/${username}.png?size=${size}`;
 }

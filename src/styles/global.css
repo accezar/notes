@@ -21,37 +21,6 @@
 }
 
 @layer components {
-	.about-list {
-		margin: 1rem 0 0;
-		padding-left: 1.25rem;
-		color: var(--text-muted);
-	}
-
-	.about-list li {
-		margin-bottom: 0.35rem;
-	}
-
-	.about-page__section-title {
-		@apply mb-5 mt-8 text-lg font-semibold tracking-tight text-ink;
-	}
-
-	.page-header {
-		margin-bottom: 2rem;
-	}
-
-	.page-header h1 {
-		font-size: clamp(1.65rem, 3.5vw, 2.25rem);
-		margin: 0 0 0.5rem;
-		letter-spacing: -0.03em;
-	}
-
-	.page-header p.lead {
-		margin: 0;
-		color: var(--text-muted);
-		font-size: 1.0625rem;
-		max-width: 45ch;
-	}
-
 	.site-body {
 		@apply m-0 flex min-h-screen flex-col bg-canvas font-sans text-ink leading-relaxed antialiased;
 	}
@@ -71,12 +40,36 @@
 
 	a {
 		color: var(--accent-soft);
+		text-decoration-line: underline;
 		text-decoration-thickness: 1px;
-		text-underline-offset: 3px;
+		text-decoration-color: color-mix(in oklab, currentColor 48%, transparent);
+		text-underline-offset: 0.2em;
+		text-decoration-skip-ink: auto;
+		transition:
+			color 0.22s ease,
+			text-decoration-color 0.22s ease,
+			text-decoration-thickness 0.22s cubic-bezier(0.4, 0, 0.2, 1);
 	}
 
 	a:hover {
 		color: var(--accent);
+		text-decoration-thickness: 2px;
+		text-decoration-color: currentColor;
+	}
+
+	a:focus-visible {
+		outline: 2px solid var(--accent-soft);
+		outline-offset: 3px;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		a {
+			transition: color 0.15s ease;
+		}
+
+		a:hover {
+			text-decoration-thickness: 1px;
+		}
 	}
 
 	body {

@@ -17,26 +17,54 @@ const allPosts = m.byYear.flatMap(([, posts]) => posts);
   description={HOME_PAGE_META.description}
 >
   <div class="shell--lecture home-layout">
-      <HomePostTimeline posts={timelinePosts} client:load />
-      <noscript>
-        <div class="home-timeline">
-          <section aria-label="Listagem de artigos">
-            <div class="post-list--home">
-              {allPosts.map((post) => (
-                <PostCard post={post} />
-              ))}
-            </div>
-          </section>
-        </div>
-      </noscript>
-      <HomeProfileAside
-        authorName={m.authorName}
-        authorBio={m.authorBio}
-        authorAvatarUrl={m.authorAvatarUrl}
-        categories={m.categories}
-        topics={m.topics}
-        postIdByCategory={m.postIdByCategory}
-        postIdByTopic={m.postIdByTopic}
-      />
+    <HomePostTimeline posts={timelinePosts} client:load />
+    <noscript>
+      <div class="home-timeline">
+        <section aria-label="Listagem de artigos">
+          <div class="post-list--home">
+            {allPosts.map((post) => (
+              <PostCard post={post} />
+            ))}
+          </div>
+        </section>
+      </div>
+    </noscript>
+    <div class="home-profile-drawer-anchor">
+      <dialog
+        id="home-profile-drawer"
+        class="home-profile-drawer"
+        aria-label="Perfil e navegação lateral"
+        closedby="any"
+      >
+        <button
+          type="button"
+          class="home-profile-drawer__close"
+          data-home-profile-drawer-close
+          aria-label="Fechar painel"
+        >
+          <span class="sr-only">Fechar</span>
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            aria-hidden="true"
+          >
+            <path d="M18 6 6 18M6 6l12 12" />
+          </svg>
+        </button>
+        <HomeProfileAside
+          authorName={m.authorName}
+          authorBio={m.authorBio}
+          authorAvatarUrl={m.authorAvatarUrl}
+          categories={m.categories}
+          topics={m.topics}
+          postIdByCategory={m.postIdByCategory}
+          postIdByTopic={m.postIdByTopic}
+        />
+      </dialog>
+    </div>
   </div>
+  <script src="../scripts/entries/home-profile-drawer.ts"></script>
 </BaseLayout>

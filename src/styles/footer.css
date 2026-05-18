@@ -19,7 +19,21 @@
 		font-size: inherit;
 		letter-spacing: inherit;
 		text-transform: inherit;
-		@apply text-ink-muted underline decoration-edge underline-offset-3 transition hover:text-ink hover:decoration-ink/40;
+		color: var(--text-muted);
+		text-decoration-line: underline;
+		text-decoration-thickness: 1px;
+		text-decoration-color: color-mix(in oklab, currentColor 48%, transparent);
+		text-underline-offset: 0.2em;
+		transition:
+			color 0.22s ease,
+			text-decoration-color 0.22s ease,
+			text-decoration-thickness 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.site-footer__credit a:hover {
+		color: var(--text);
+		text-decoration-thickness: 2px;
+		text-decoration-color: currentColor;
 	}
 
 	.site-footer__inner {

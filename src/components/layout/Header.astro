@@ -1,11 +1,37 @@
 ---
 import TerminalNavLogo from './TerminalNavLogo.astro';
 import ThemeToggle from '../react/ThemeToggle';
+import { isHomePage } from '../../utils/site';
+
+const showHomeProfileMenu = isHomePage(Astro.url);
 ---
 
 <header class="site-header">
 	<div class="site-header__inner">
 		<nav class="site-header__nav" aria-label="Principal">
+			{showHomeProfileMenu ? (
+				<button
+					type="button"
+					class="site-header__profile-menu"
+					data-home-profile-menu
+					aria-label="Abrir painel de perfil e navegação"
+					aria-expanded="false"
+					aria-controls="home-profile-drawer"
+				>
+					<span class="sr-only">Abrir menu lateral</span>
+					<svg
+						class="site-header__profile-menu-icon"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						aria-hidden="true"
+					>
+						<path d="M4 7h16M4 12h16M4 17h16" />
+					</svg>
+				</button>
+			) : null}
 			<TerminalNavLogo />
 		</nav>
 		<ThemeToggle client:load />
