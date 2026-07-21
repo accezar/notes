@@ -48,4 +48,18 @@ export function persistTheme(theme: 'light' | 'dark'): void {
 		}
 	}
 }
-export const HEAD_THEME_INLINE = `(function(){var K=${JSON.stringify(THEME_STORAGE.lsKey)};var L=${JSON.stringify(THEME_STORAGE.legacyLsKey)};var C=${JSON.stringify(THEME_STORAGE.cookieKey)};var root=document.documentElement;function norm(v){if(v==null)return null;v=(''+v).trim().toLowerCase();return v==='light'||v==='dark'?v:null;}var stored=null;try{stored=localStorage.getItem(K)||localStorage.getItem(L);}catch(e){}var t=norm(stored);if(!t){try{var r=new RegExp('(?:^|; )'+C+'=([^;]*)');var m=document.cookie.match(r);if(m)t=norm(decodeURIComponent(m[1]));}catch(e2){}}if(t==='light'||t==='dark'){root.classList.toggle('dark',t==='dark');}else{root.classList.toggle('dark',window.matchMedia('(prefers-color-scheme: dark)').matches);}})();`;
+/**
+ * FOUC-prevention bootstrap for `<head>`.
+ * Keys are hardcoded (not interpolated) so CodeQL does not flag
+ * `js/bad-code-sanitization`. Keep in sync with THEME_STORAGE.
+ */
+export const HEAD_THEME_INLINE =
+	"(function(){var K='blog.color-scheme';var L='theme';var C='blog_theme';var root=document.documentElement;function norm(v){if(v==null)return null;v=(''+v).trim().toLowerCase();return v==='light'||v==='dark'?v:null;}var stored=null;try{stored=localStorage.getItem(K)||localStorage.getItem(L);}catch(e){}var t=norm(stored);if(!t){try{var r=new RegExp('(?:^|; )'+C+'=([^;]*)');var m=document.cookie.match(r);if(m)t=norm(decodeURIComponent(m[1]));}catch(e2){}}if(t==='light'||t==='dark'){root.classList.toggle('dark',t==='dark');}else{root.classList.toggle('dark',window.matchMedia('(prefers-color-scheme: dark)').matches);}})();";
+
+if (
+	THEME_STORAGE.lsKey !== 'blog.color-scheme' ||
+	THEME_STORAGE.legacyLsKey !== 'theme' ||
+	THEME_STORAGE.cookieKey !== 'blog_theme'
+) {
+	throw new Error('HEAD_THEME_INLINE is out of sync with THEME_STORAGE');
+}
