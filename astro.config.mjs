@@ -1,5 +1,6 @@
 // @ts-check
 import react from '@astrojs/react';
+import { unified } from '@astrojs/markdown-remark';
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import { rehypeBlogImages } from './src/utils/rehype-blog-images.ts';
@@ -15,6 +16,10 @@ export default defineConfig({
 	output: 'static',
 	integrations: [react()],
 	markdown: {
+		processor: unified({
+			remarkPlugins: [remarkHttpAnnotations],
+			rehypePlugins: [[rehypeBlogImages, { base }], rehypeWrapCodeBlocks],
+		}),
 		shikiConfig: {
 			themes: {
 				light: 'github-light',
@@ -27,8 +32,6 @@ export default defineConfig({
 				HTML: 'html',
 			},
 		},
-		remarkPlugins: [remarkHttpAnnotations],
-		rehypePlugins: [[rehypeBlogImages, { base }], rehypeWrapCodeBlocks],
 	},
 	vite: {
 		plugins: [tailwindcss()],

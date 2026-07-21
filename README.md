@@ -13,7 +13,7 @@ Blog pessoal para compartilhar notas técnicas.
 
 ## Comandos
 
-Requisito: Node **22.12+** (conforme `package.json`).
+Requisito: Node **22.12+** (conforme `package.json` / `.nvmrc`).
 
 ```bash
 npm install
