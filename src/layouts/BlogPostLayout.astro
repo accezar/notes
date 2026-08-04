@@ -33,7 +33,7 @@ const authorAvatarUrl = githubAvatarUrl(SITE_AUTHOR.githubUsername);
 					/>
 				) : null}
 				<slot />
-				<PostMermaid client:visible />
+				<PostMermaid client:load />
 				<script src="../scripts/entries/code-blocks.ts"></script>
 				<PostWrittenBy
 					authorName={SITE_AUTHOR.name}
@@ -68,6 +68,23 @@ const authorAvatarUrl = githubAvatarUrl(SITE_AUTHOR.githubUsername);
 			</svg>
 		</button>
 		<img class="post-image-lightbox__img" alt="" decoding="async" />
+	</dialog>
+	<dialog
+		id="post-mermaid-lightbox"
+		class="post-mermaid-lightbox"
+		aria-label="Visualização ampliada do diagrama"
+		closedby="any"
+	>
+		<div class="post-mermaid-lightbox__toolbar" aria-label="Controles do diagrama">
+			<button type="button" data-mermaid-zoom-out aria-label="Diminuir zoom">−</button>
+			<output data-mermaid-zoom aria-live="polite">100%</output>
+			<button type="button" data-mermaid-zoom-in aria-label="Aumentar zoom">+</button>
+			<button type="button" data-mermaid-zoom-reset>Redefinir</button>
+			<button type="button" data-mermaid-close>Fechar</button>
+		</div>
+		<div class="post-mermaid-lightbox__viewport" data-mermaid-viewport tabindex="0">
+			<div class="post-mermaid-lightbox__canvas" data-mermaid-canvas></div>
+		</div>
 	</dialog>
 	<script src="../scripts/entries/post-image-lightbox.ts"></script>
 </BaseLayout>

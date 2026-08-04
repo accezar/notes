@@ -13,6 +13,11 @@ html.dark body.page-body--clean::before {
 	content: none;
 }
 
+/* --- html.post-mermaid-lightbox-open --- */
+html.post-mermaid-lightbox-open {
+	overflow: hidden;
+}
+
 /* --- post-article --- */
 .post-article__author-card {
 	display: flex;
@@ -206,8 +211,7 @@ html.dark body.page-body--clean::before {
 }
 
 /* Shiki (Astro): dual theme via CSS variables on .astro-code */
-.post-article__main .astro-code,
-.post-article__main .astro-code span {
+.post-article__main .astro-code {
 	color: var(--shiki-light);
 	background-color: var(--shiki-light-bg);
 	font-style: var(--shiki-light-font-style);
@@ -215,10 +219,25 @@ html.dark body.page-body--clean::before {
 	text-decoration: var(--shiki-light-text-decoration);
 }
 
-html.dark .post-article__main .astro-code,
-html.dark .post-article__main .astro-code span {
+html.dark .post-article__main .astro-code {
 	color: var(--shiki-dark);
 	background-color: var(--shiki-dark-bg);
+	font-style: var(--shiki-dark-font-style);
+	font-weight: var(--shiki-dark-font-weight);
+	text-decoration: var(--shiki-dark-text-decoration);
+}
+
+.post-article__main .astro-code span {
+	color: var(--shiki-light);
+	background-color: transparent;
+	font-style: var(--shiki-light-font-style);
+	font-weight: var(--shiki-light-font-weight);
+	text-decoration: var(--shiki-light-text-decoration);
+}
+
+html.dark .post-article__main .astro-code span {
+	color: var(--shiki-dark);
+	background-color: transparent;
 	font-style: var(--shiki-dark-font-style);
 	font-weight: var(--shiki-dark-font-weight);
 	text-decoration: var(--shiki-dark-text-decoration);
@@ -387,13 +406,45 @@ html.dark .post-article__main .astro-code span {
 }
 
 .post-article__mermaid-wrap {
+	position: relative;
 	margin: 1.5rem 0;
-	padding: 1rem 1.1rem;
+	padding: 3.25rem 1.1rem 1rem;
 	border-radius: var(--radius);
 	border: 1px solid var(--border);
 	background: var(--surface);
 	box-shadow: inset 0 0 0 1px var(--border-soft);
 	overflow-x: auto;
+}
+
+.post-article__mermaid-expand {
+	display: inline-flex;
+	position: absolute;
+	top: 0.65rem;
+	right: 0.65rem;
+	align-items: center;
+	justify-content: center;
+	min-height: 2rem;
+	padding: 0.35rem 0.65rem;
+	border: 1px solid var(--border);
+	border-radius: var(--radius-sm);
+	background: color-mix(in oklab, var(--surface) 88%, var(--text) 12%);
+	color: var(--text-muted);
+	font-family: var(--font-mono);
+	font-size: 0.66rem;
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	cursor: pointer;
+}
+
+.post-article__mermaid-expand:focus-visible {
+	outline: 2px solid var(--accent-soft);
+	outline-offset: 2px;
+}
+
+.post-article__mermaid-expand:hover {
+	border-color: var(--border-strong);
+	color: var(--text);
 }
 
 .post-article__mermaid-wrap .mermaid {
@@ -438,11 +489,17 @@ html.dark .post-article__main .astro-code span {
 	);
 }
 
-.post-article__toc-item {
+.post-article__main .post-article__toc-item {
 	margin: 0;
 	padding: 0;
 	list-style: none;
 	counter-increment: toc;
+}
+
+/* Cancel prose `ol > li::before` numbering — TOC uses link ::before instead. */
+.post-article__main .post-article__toc-item::before {
+	content: none;
+	counter-increment: none;
 }
 
 .post-article__toc-item + .post-article__toc-item {
@@ -533,7 +590,8 @@ html.dark .post-article__main .astro-code span {
 	line-height: 1.2;
 }
 
-.post-article__toc-list {
+.post-article__main .post-article__toc-list {
+	gap: 0.6rem;
 	margin: 0;
 	padding: 0;
 	list-style: none;
@@ -675,6 +733,112 @@ html.dark .post-article__main .astro-code span {
 	border-radius: var(--radius-sm);
 	object-fit: contain;
 	object-position: center;
+}
+
+/* --- post-mermaid-lightbox --- */
+.post-mermaid-lightbox {
+	width: 100%;
+	max-width: none;
+	height: 100%;
+	max-height: none;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: var(--bg);
+	color: var(--text);
+	overflow: hidden;
+}
+
+.post-mermaid-lightbox[open] {
+	display: grid;
+	grid-template-rows: auto minmax(0, 1fr);
+}
+
+.post-mermaid-lightbox::backdrop {
+	background: color-mix(in oklab, var(--bg) 18%, black);
+}
+
+.post-mermaid-lightbox__canvas {
+	display: grid;
+	width: max-content;
+	min-width: 100%;
+	min-height: 100%;
+	box-sizing: border-box;
+	place-items: center;
+	padding: clamp(1rem, 3vw, 2rem);
+}
+
+.post-mermaid-lightbox__diagram {
+	display: block;
+	max-width: none;
+	height: auto;
+	transition: width 0.15s ease;
+}
+
+.post-mermaid-lightbox__toolbar {
+	display: flex;
+	z-index: 1;
+	box-sizing: border-box;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 0.5rem;
+	min-height: 3.5rem;
+	padding: calc(0.65rem + env(safe-area-inset-top, 0px)) 0.75rem 0.65rem;
+	border-bottom: 1px solid var(--border);
+	background: color-mix(in oklab, var(--bg) 92%, var(--text) 8%);
+}
+
+.post-mermaid-lightbox__toolbar button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 2.25rem;
+	min-height: 2.25rem;
+	padding: 0.35rem 0.65rem;
+	border: 1px solid var(--border);
+	border-radius: var(--radius-sm);
+	background: var(--surface);
+	color: var(--text);
+	font-family: var(--font-mono);
+	font-size: 0.72rem;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.post-mermaid-lightbox__toolbar button:disabled {
+	opacity: 0.45;
+	cursor: not-allowed;
+}
+
+.post-mermaid-lightbox__toolbar button:focus-visible {
+	outline: 2px solid var(--accent-soft);
+	outline-offset: 2px;
+}
+
+.post-mermaid-lightbox__toolbar button:hover:not(:disabled) {
+	border-color: var(--border-strong);
+	background: color-mix(in oklab, var(--surface) 88%, var(--text) 12%);
+}
+
+.post-mermaid-lightbox__toolbar output {
+	min-width: 3.5rem;
+	color: var(--text-muted);
+	font-family: var(--font-mono);
+	font-size: 0.72rem;
+	text-align: center;
+}
+
+.post-mermaid-lightbox__viewport {
+	overflow: auto;
+	overscroll-behavior: contain;
+	background-image: var(--canvas-grid-x), var(--canvas-grid-y);
+	background-color: var(--bg);
+	background-size: var(--canvas-grid-size-body), var(--canvas-grid-size-body);
+}
+
+.post-mermaid-lightbox__viewport:focus-visible {
+	outline: 2px solid var(--accent-soft);
+	outline-offset: -2px;
 }
 
 /* --- post-hero --- */
