@@ -15,12 +15,18 @@ interface Props {
 }
 
 const { post, headings } = Astro.props;
-const { title, description } = post.data;
+const { title, description, thumbnail } = post.data;
 const pageTitle = pageTitleWithBrand(title);
 const authorAvatarUrl = githubAvatarUrl(SITE_AUTHOR.githubUsername);
 ---
 
-<BaseLayout title={pageTitle} description={description} bodyClass="page-body--clean">
+<BaseLayout
+	title={pageTitle}
+	description={description}
+	image={thumbnail}
+	type="article"
+	bodyClass="page-body--clean"
+>
 	<PostHeroSection data={post.data} body={post.body} />
 	<div class="shell--lecture post-page">
 		<article class="post-article">

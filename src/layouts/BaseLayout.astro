@@ -11,11 +11,19 @@ import { sitePath } from '../utils/site-path';
 interface Props {
 	title: string;
 	description?: string;
+	image?: string;
+	type?: 'website' | 'article';
 	bodyClass?: string;
 }
 
-const { title, description, bodyClass } = Astro.props;
+const { title, description, image, type = 'website', bodyClass } = Astro.props;
 const canonicalHref = canonicalUrl(Astro.site, Astro.url.pathname);
+const imageHref = image
+	? new URL(
+			/^https?:\/\//i.test(image) ? image : sitePath(image),
+			Astro.site ?? Astro.url.origin,
+		).href
+	: undefined;
 ---
 
 <!doctype html>
@@ -35,6 +43,25 @@ const canonicalHref = canonicalUrl(Astro.site, Astro.url.pathname);
 		<title>{title}</title>
 		{description ? <meta name="description" content={description} /> : null}
 		{canonicalHref ? <link rel="canonical" href={canonicalHref} /> : null}
+		<meta property="og:type" content={type} />
+		<meta property="og:title" content={title} />
+		{description ? <meta property="og:description" content={description} /> : null}
+		{canonicalHref ? <meta property="og:url" content={canonicalHref} /> : null}
+		{imageHref ? (
+			<>
+				<meta property="og:image" content={imageHref} />
+				<meta property="og:image:alt" content={title} />
+			</>
+		) : null}
+		<meta name="twitter:card" content={imageHref ? 'summary_large_image' : 'summary'} />
+		<meta name="twitter:title" content={title} />
+		{description ? <meta name="twitter:description" content={description} /> : null}
+		{imageHref ? (
+			<>
+				<meta name="twitter:image" content={imageHref} />
+				<meta name="twitter:image:alt" content={title} />
+			</>
+		) : null}
 		<GoogleAnalytics />
 	</head>
 	<body class:list={['site-body', bodyClass].filter(Boolean)}>
