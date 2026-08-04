@@ -1,4 +1,4 @@
-export function visibleTopicsForCard(topics: string[] | undefined, limit = 2): string[] {
+export function visibleTopicsForCard(topics: string[] | undefined, limit = 3): string[] {
 	return (topics ?? []).map((t) => t.trim()).filter(Boolean).slice(0, limit);
 }
 

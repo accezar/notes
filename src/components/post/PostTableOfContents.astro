@@ -12,6 +12,9 @@ let minDepth = minRaw;
 let maxDepth = maxRaw;
 if (minDepth > maxDepth) [minDepth, maxDepth] = [maxDepth, minDepth];
 const items = headings.filter((h) => h.depth >= minDepth && h.depth <= maxDepth);
+
+/** Drop leading "1. " so CSS `::before` counters don't double-number titled sections. */
+const tocLabel = (text: string) => text.replace(/^\d+\.\s+/, '');
 ---
 
 {
@@ -24,7 +27,7 @@ const items = headings.filter((h) => h.depth >= minDepth && h.depth <= maxDepth)
 				{items.map((h) => (
 					<li class="post-article__toc-item" data-toc-depth={h.depth}>
 						<a href={`#${h.slug}`} class="post-article__toc-link">
-							<span class="post-article__toc-link-text">{h.text}</span>
+							<span class="post-article__toc-link-text">{tocLabel(h.text)}</span>
 						</a>
 					</li>
 				))}
