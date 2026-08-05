@@ -9,6 +9,7 @@ export const SITE_AUTHOR = {
 export const SITE_SOCIAL = {
 	github: `https://github.com/${SITE_AUTHOR.githubUsername}`,
 	linkedin: 'https://www.linkedin.com/in/accezar',
+	medium: 'https://medium.com/@annacezar',
 } as const;
 
 export const HOME_PAGE_META = {
